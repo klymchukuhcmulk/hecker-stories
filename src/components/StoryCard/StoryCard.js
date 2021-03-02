@@ -19,7 +19,6 @@ const StoryCard = ({ story, xs = 7 }) => {
   const classes = useStyles()
   const isLoading = useSelector(selectLoading)
   const authorId = useSelector(selectCurrentAuthorId)
-  console.log(story)
   const goToAuthor = () => {
     history.push('/author?id=' + story.by)
   }
@@ -40,8 +39,18 @@ const StoryCard = ({ story, xs = 7 }) => {
             title={<Link href={story.url}>{story.title}</Link>}
           />
           }
+          {story.by && <Typography variant="body2" color="textSecondary">
+            Author: {story.by}
+          </Typography>}
+          {story.score && <Typography variant="body2" color="textSecondary">
+            Karma: {story.score} points
+          </Typography>}
+          {story.time && <Typography variant="body2" color="textSecondary">
+            Created: {new Date(story.time).toLocaleDateString()}
+          </Typography>}
           {story.text && (<Typography><span dangerouslySetInnerHTML={{__html: story.text}} /></Typography>)}
-          {authorId === -1 && <CardActions disableSpacing>
+          {authorId === -1 &&
+          <CardActions disableSpacing>
             <Button
               className="story-card__author-btn"
               onClick={goToAuthor}
